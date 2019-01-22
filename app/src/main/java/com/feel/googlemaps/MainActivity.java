@@ -2,6 +2,7 @@ package com.feel.googlemaps;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.Manifest;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -22,19 +23,29 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 >>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
+=======
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+>>>>>>> parent of 7794b33... Distance
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import java.security.MessageDigest;
@@ -50,12 +61,11 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener,GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener {
 >>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
+=======
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+>>>>>>> parent of 7794b33... Distance
     private GoogleMap mMap;
     private ImageView img_search;
-    private Marker myMarker;
-    private LatLng mStart_Location;
-    private Location mPointing_Locationn;
-    private float mDistance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,16 +83,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        mStart_Location = new LatLng(37.363348, 127.114821);
-        mPointing_Locationn.setLatitude(mStart_Location.latitude); // 시작 위치 위도
-        mPointing_Locationn.setLongitude(mStart_Location.longitude); // 시작 위치 경도
-
-        mMap.addMarker(new MarkerOptions().position(mStart_Location).title("Marker in Location")); // 마커를 추가한다.
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mStart_Location));// moveCamera 는 바로 변경하지만,
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));     // animateCamera() 는 근거리에선 부드럽게 변경합니다
-        mMap.setOnMapClickListener(MainActivity.this); // 지도 클릭 이벤트
-        mMap.setOnMapLongClickListener(MainActivity.this); // 지도 롱클릭 이벤트
-
+        LatLng Location = new LatLng(37.363348, 127.114821);
+        mMap.addMarker(new MarkerOptions().position(Location).title("Marker in Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Location));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        mMap.animateCamera(zoom);   // moveCamera 는 바로 변경하지만,
+        // animateCamera() 는 근거리에선 부드럽게 변경합니다
 
 
         /**
@@ -119,59 +125,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    @Override
-    public void onMapClick(LatLng latLng) {
-        Toast.makeText(this,"Map Click\n위도 : " +latLng.latitude+ "\n경도 : "+latLng.longitude,Toast.LENGTH_SHORT).show();
-        if (myMarker == null) {
-
-        }
-        else {
-//            myMarker = mMap.addMarker(new MarkerOptions()
-//            .position(latLng));
-        }
-
-    }
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-//        Toast.makeText(this,"Map Long Click\n위도 : " +latLng.latitude+ "\n경도 : "+latLng.longitude,Toast.LENGTH_SHORT).show();
-
-            // First check if myMarker is null
-            if (myMarker == null) {
-
-                // Marker was not set yet. Add marker:
-                myMarker = mMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title("Your Start Position")
-                        .snippet("위도 : " +latLng.latitude+ "\n경도 : "+latLng.longitude));
-
-
-            } else {
-
-                // Marker already exists, just update it's position
-
-                myMarker.setPosition(latLng);
-
-            }
-        Location lat = new Location("");
-        lat.setLongitude(latLng.longitude);
-        lat.setLatitude(latLng.latitude);
-
-        mDistance = mPointing_Locationn.distanceTo(lat)/1000 ;
-        if(mDistance < 1) {
-            mDistance = mPointing_Locationn.distanceTo(lat) / 10;
-            Toast.makeText(this,"거리 : " + new DecimalFormat("###,###.##").format(mDistance) + " M",Toast.LENGTH_SHORT).show();
-        }
-        else
-            Toast.makeText(this,"거리 : " + new DecimalFormat("###,###.##").format(mDistance) + " KM",Toast.LENGTH_SHORT).show();
-
-
-        }
-
     public void reConnectedWidget()
     {
         img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setOnClickListener(this);
-        mPointing_Locationn = new Location("Pointing_Location");
         permissionCheck();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -179,16 +136,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
 
-
     }
-    public void Distans()
-    {
 
-    }
     public void permissionCheck()
     {
 
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     private void getAppKeyHash() {
@@ -214,4 +168,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 >>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
+=======
+>>>>>>> parent of 7794b33... Distance
 }
