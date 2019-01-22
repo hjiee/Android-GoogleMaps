@@ -1,6 +1,7 @@
 package com.feel.googlemaps;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.Manifest;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +12,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+=======
+import android.location.Location;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+>>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
 =======
 import android.location.Location;
 import android.os.Bundle;
@@ -30,9 +36,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+=======
+import java.text.DecimalFormat;
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener,GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener {
+>>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
 =======
 import java.text.DecimalFormat;
 
@@ -178,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     private void getAppKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
@@ -193,6 +206,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e("Hash_key","Function = "+ e.toString());
         }
     }
+=======
+
+
+>>>>>>> 7794b33b0c1799918ea77d2e20a4007ab4429f16
 =======
 
 
