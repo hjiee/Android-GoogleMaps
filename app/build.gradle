@@ -30,6 +30,7 @@ dependencies {
 
     // 구글 지도 API
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0' //현재 내위치를 표시하기 위해서
 
 
 }

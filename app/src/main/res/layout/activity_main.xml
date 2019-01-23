@@ -16,21 +16,16 @@
 
 
         <EditText
-            android:id="@+id/edt_search"
+            android:id="@+id/edt_distance"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:gravity="center"
-            android:hint="주소 검색"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:hint="남은거리"
             android:background="@null"/>
 
 
-        <ImageView
-            android:id="@+id/img_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ic_search"/>
     </RelativeLayout>
 
     <fragment
