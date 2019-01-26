@@ -21,7 +21,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/key_google" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="screenSize|orientation"> <!--ConfigChanges 는 화면 사이즈가 변경되거나 회전이 일어 났을시 액티비티에서 알아서 하겠다는 옵션-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
