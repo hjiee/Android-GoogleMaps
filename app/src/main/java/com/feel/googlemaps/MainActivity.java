@@ -1,23 +1,25 @@
 package com.feel.googlemaps;
 
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
+import android.content.pm.PackageInfo;
+import android.content.pm.Signature;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.location.Location;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -35,12 +37,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+
 import java.io.IOException;
 import java.security.Permission;
 import java.text.DecimalFormat;
+import java.security.MessageDigest;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private Context mContext;
     private GoogleMap mMap;
     private Geocoder mGeocoder;
@@ -55,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location mCurrentLocation;
     private LocationRequest mLocationRequest;
     private boolean mLocationPermissionGranted = false;
-
     private EditText medt_distance;
-
 
     private float mDistance;
 
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Log.e("GoogleMaps", "Success");
 
+//        getAppKeyHash(); //get Hash Key
+
+
     }
 
 
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getLocationPermission();
         }
         // Add a marker in Sydney and move the camera
+
         mStart_Location = new LatLng(37.363348, 127.114821);
         mPointing_Locationn.setLatitude(mStart_Location.latitude); // 시작 위치 위도
         mPointing_Locationn.setLongitude(mStart_Location.longitude); // 시작 위치 경도
@@ -94,6 +100,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mStart_Location,15));   // animateCamera() 는 근거리에선 부드럽게 변경합니다
         mMap.setOnMapClickListener(MainActivity.this); // 지도 클릭 이벤트
         mMap.setOnMapLongClickListener(MainActivity.this); // 지도 롱클릭 이벤트
+
+
+        LatLng Location = new LatLng(37.363348, 127.114821);
+        mMap.addMarker(new MarkerOptions().position(Location).title("Marker in Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Location));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        mMap.animateCamera(zoom);   // moveCamera 는 바로 변경하지만,
+        // animateCamera() 는 근거리에선 부드럽게 변경합니다
 
 
         /**
@@ -187,6 +201,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         medt_distance = (EditText) findViewById(R.id.edt_distance);
         mPointing_Locationn = new Location("Pointing_Location");
 
+        permissionCheck();
+
+
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext); // 현재 내위치를 얻어 오기 위한 변수
         CreateLocationCallback();
@@ -194,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
     }
     @Override
@@ -247,9 +263,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); // 배터리 소모량이 높고 정확도가 높다.
     }
     @SuppressWarnings("MissingPermission")
-    private void getLocationPermission()
-    {
+    private void getLocationPermission() {
 
+    }
+
+    public void permissionCheck()
+    {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
@@ -270,6 +289,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private void getAppKeyHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                Log.e("Hash_key", something);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.e("Hash_key","Function = "+ e.toString());
+        }
+    }
+
     /**
      * 콜백을 제거 해준다.
      */
@@ -287,7 +322,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     });
         }
     }
-    public void permissionCheck() {
 
-    }
 }
